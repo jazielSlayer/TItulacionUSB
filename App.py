@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
@@ -7,6 +7,7 @@ app.config['MYSQL_DB'] = 'sistematitulacion'
 app.config['MYSQL_PASSWORD'] = 'DrXeno79TESLA'
 mysql = MySQL(app)
 
+app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def index():
@@ -15,7 +16,7 @@ def index():
 @app.route('/add_estudiante', methods=['POST'])
 def add_estudiante():
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['nombre']
         apellido = request.form['apellido']
         codigo_estudiante = request.form['codigo_estudiante']
         email = request.form['email']
@@ -26,7 +27,8 @@ def add_estudiante():
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO estudiantes (nombre, apellido, CodigoEstudiante, email, telefono, EstadoPagos, HabilitadoTitulacion) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, apellido, codigo_estudiante, email, telefono, estado_pagos, habilitado_titulacion))
         mysql.connection.commit()
-        return 'registro exitoso'
+        flash('Estudiante agregado correctamente')
+        return redirect(url_for('index'))
 
 
 @app.route('/edit')
