@@ -35,14 +35,35 @@ def add_estudiante():
         return redirect(url_for('index'))
 
 
-@app.route('/edit')
-def edit_estudiante():
-    return 'edit_estudiante'
+@app.route('/edit/<id>')
+def get_estudiante(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM estudiantes WHERE idEstudiante = %s', (id))
+    data = cur.fetchall()
+    return render_template('edit_Estudiante.html', estudiante = data[0])
+
+@app.route('/update/<id>', methods=['POST'])
+def update_estudiante(id):
+    if request.method == 'POST':
+        name =request.form['nombre']
+        apellido = request.form['apellido']
+        codigo_estudiante = request.form['codigo_estudiante']
+        email = request.form['email']
+        telefono = request.form['telefono']
+        estado_pagos = request.form['estado_pagos']
+        habilitado_titulacion = request.form['habilitado_titulacion']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE estudiantes SET nombre = %s, apellido = %s, CodigoEstudiante = %s, email = %s, telefono = %s, EstadoPagos = %s, HabilitadoTitulacion = %s WHERE idEstudiante = %s""",
+                (name, apellido, codigo_estudiante, email, telefono, estado_pagos, habilitado_titulacion, id))
+    mysql.connection.commit()
+    flash('Estudiante actualizado correctamente')
+    return redirect(url_for('index'))
+    
 
 @app.route('/delete/<string:id>')
 def delet_estudiante(id):
     cur = mysql.connection.cursor()
-    cur.execute('DELETE FROM estudiantes WHERE id = {0}'.format(id))
+    cur.execute('DELETE FROM estudiantes WHERE idEstudiante = {0}'.format(id))
     mysql.connection.commit()
     flash('Estudiante eliminado correctamente')
     return redirect(url_for('index'))

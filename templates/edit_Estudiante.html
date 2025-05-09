@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<form action="/update/{{estudiante.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <div style="margin-bottom: 15px;">
+        <label for="nombre" style="display: block; font-weight: bold;">Nombre</label>
+        <input type="text" id="nombre" name="nombre" value="{{estudiante[1]}}" placeholder="Nombre" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="apellido" style="display: block; font-weight: bold;">Apellido</label>
+        <input type="text" id="apellido" name="apellido" value="{{estudiante[2]}}" placeholder="Apellido" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="codigo_estudiante" style="display: block; font-weight: bold;">Código de Estudiante</label>
+        <input type="text" id="codigo_estudiante" name="codigo_estudiante" value="{{estudiante[3]}}" placeholder="Código de Estudiante" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="email" style="display: block; font-weight: bold;">Correo Electrónico</label>
+        <input type="email" id="email" name="email" value="{{estudiante[4]}}" placeholder="Correo Electrónico" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="telefono" style="display: block; font-weight: bold;">Teléfono</label>
+        <input type="text" id="telefono" name="telefono" value="{{estudiante[5]}}" placeholder="Teléfono" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="estado_pagos" style="display: block; font-weight: bold;">Estado de Pagos</label>
+        <input type="number" id="estado_pagos" name="estado_pagos" value="{{estudiante[6]}}" placeholder="Estado de Pagos" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="habilitado_titulacion" style="display: block; font-weight: bold;">Habilitado para Titulación</label>
+        <input type="number" id="habilitado_titulacion" name="habilitado_titulacion" value="{{estudiante[7]}}" placeholder="Habilitado para Titulación" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        Actualizar
+    </button>
+</form>
+{% endblock %}
