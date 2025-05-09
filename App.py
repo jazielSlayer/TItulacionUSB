@@ -24,7 +24,7 @@ def docentes():
     cur.execute('SELECT * FROM docentes')
     data = cur.fetchall()
     print(data)
-    return render_template('index.html', estudiantes = data)
+    return render_template('docentes.html', estudiantes = data)
 
 @app.route('/pagos')
 def pagos():
@@ -32,7 +32,7 @@ def pagos():
     cur.execute('SELECT * FROM pagos')
     data = cur.fetchall()
     print(data)
-    return render_template('index.html', estudiantes = data)
+    return render_template('pagos.html', estudiantes = data)
 
 #Guardar
 @app.route('/add_estudiante', methods=['POST'])
