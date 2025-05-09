@@ -9,6 +9,7 @@ mysql = MySQL(app)
 
 app.secret_key = 'mysecretkey'
 
+#paginas
 @app.route('/')
 def index():
     cur = mysql.connection.cursor()
@@ -16,7 +17,24 @@ def index():
     data = cur.fetchall()
     print(data)
     return render_template('index.html', estudiantes = data)
-    
+
+@app.route('/docentes')
+def docentes():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM docentes')
+    data = cur.fetchall()
+    print(data)
+    return render_template('index.html', estudiantes = data)
+
+@app.route('/pagos')
+def pagos():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM pagos')
+    data = cur.fetchall()
+    print(data)
+    return render_template('index.html', estudiantes = data)
+
+#Guardar
 @app.route('/add_estudiante', methods=['POST'])
 def add_estudiante():
     if request.method == 'POST':
@@ -34,7 +52,7 @@ def add_estudiante():
         flash('Estudiante agregado correctamente')
         return redirect(url_for('index'))
 
-
+#editar
 @app.route('/edit/<id>')
 def get_estudiante(id):
     cur = mysql.connection.cursor()
@@ -42,6 +60,7 @@ def get_estudiante(id):
     data = cur.fetchall()
     return render_template('edit_Estudiante.html', estudiante = data[0])
 
+#actualisar
 @app.route('/update/<id>', methods=['POST'])
 def update_estudiante(id):
     if request.method == 'POST':
@@ -59,7 +78,7 @@ def update_estudiante(id):
     flash('Estudiante actualizado correctamente')
     return redirect(url_for('index'))
     
-
+#Eliminar
 @app.route('/delete/<string:id>')
 def delet_estudiante(id):
     cur = mysql.connection.cursor()
