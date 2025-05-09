@@ -11,7 +11,11 @@ app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM estudiantes')
+    data = cur.fetchall()
+    print(data)
+    return render_template('index.html', estudiantes = data)
     
 @app.route('/add_estudiante', methods=['POST'])
 def add_estudiante():
@@ -34,9 +38,14 @@ def add_estudiante():
 @app.route('/edit')
 def edit_estudiante():
     return 'edit_estudiante'
-@app.route('/delete')
-def delet_estudiante():
-    return 'delet_estudiante'
+
+@app.route('/delete/<string:id>')
+def delet_estudiante(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM estudiantes WHERE id = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Estudiante eliminado correctamente')
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
         # Run the Flask app on port 3000

@@ -1,10 +1,6 @@
-{% whit messages = get_flashed_menssages() %}
- {% if messages %}
-    {% for message in messages %}
-        <p>{{ message}}</p>
-    {% endfor %}
- {% endif %}
-{% endwhit %}
+{% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+{% endfor %}
 <form action="/add_estudiante" method="POST">
     <input type="text" name="nombre" placeholder="Ingresa tu nombre" required>
     <input type ="text" name="apellido" placeholder="Ingresa tu apellido" required>
@@ -18,6 +14,36 @@
     </button>
 </form>
 
+<table>
+    <thead>
+        <tr>
+            <td>Nombre</td>
+            <td>Apellido</td>
+            <td>Código Estudiante</td>
+            <td>Email</td>
+            <td>Teléfono</td>
+            <td>Estado de Pagos</td>
+            <td>Habilitado para Titulación</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.1 }}</td>
+                <td>{{ estudiante.2 }}</td>
+                <td>{{ estudiante.3 }}</td>
+                <td>{{ estudiante.4 }}</td>
+                <td>{{ estudiante.5 }}</td>
+                <td>{{ estudiante.6 }}</td>
+                <td>{{ estudiante.7 }}</td>
+                <td>
+                    <a href="/edit/{{estudiante.0}}">Editar</a>
+                    <a href="/delete/{{estudiante.0}}">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 
 
