@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<form action="/docentes/update_docente/{{docente.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <div style="margin-bottom: 15px;">
+        <label for="nombre" style="display: block; font-weight: bold;">Nombre</label>
+        <input type="text" id="nombre" name="nombre" value="{{docente[1]}}" placeholder="Nombre" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="apellido" style="display: block; font-weight: bold;">Apellido</label>
+        <input type="text" id="apellido" name="apellido" value="{{docente[2]}}" placeholder="Apellido" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="email" style="display: block; font-weight: bold;">Email</label>
+        <input type="text" id="email" name="email" value="{{docente[3]}}" placeholder="email" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="telefono" style="display: block; font-weight: bold;">Telefono</label>
+        <input type="text" id="telefono" name="telefono" value="{{docente[4]}}" placeholder="Telefono" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="habilidades" style="display: block; font-weight: bold;">Habilidades</label>
+        <input type="text" id="habilidades" name="habilidades" value="{{docente[5]}}" placeholder="habilidades" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="habilitado_guia" style="display: block; font-weight: bold;">Guia</label>
+        <input type="text" id="habilitado_guia" name="habilitado_guia" value="{{docente[6]}}" placeholder="habilitado_guia" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="es_jurado" style="display: block; font-weight: bold;">Jurado</label>
+        <input type="text" id="es_jurado" name="es_jurado" value="{{docente[7]}}" placeholder="es_jurado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        Actualizar
+    </button>
+</form>
+{% endblock %}

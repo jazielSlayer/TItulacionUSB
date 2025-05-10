@@ -13,25 +13,28 @@
             </div>
         {% endfor %}
         <div class="card card-body">
-            <form action="/add_pago" method="POST">
+            <form action="/add_proyecto" method="POST">
                 <div class="form-group">
                     <input type="text" name="idestudiante" placeholder="Código del estudiante" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="date" name="fecha_pago" placeholder="Fecha del pago" required class="form-control">
+                    <input type="text" name="iddocenteguia" placeholder="Id Docente Guia" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="number" name="monto" placeholder="Monto del pago" required class="form-control">
+                    <input type="text" name="titulo" placeholder="titulo" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="comprobante" placeholder="Comprobante de pago" required class="form-control">
+                    <input type="text" name="descripcion" placeholder="Descripcion" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="estado" placeholder="Esatado ej: Aprobado, Pendiente, Rechazado" class="form-control"></textarea>
+                    <input type="date" name="fechainicio" placeholder="Fecha" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="estado" placeholder="Estado" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">
-                        Guardar Pago
+                        Guardar Proyecto
                     </button>
                 </div>
             </form>            
@@ -42,22 +45,25 @@
             <thead>
                 <tr>
                     <td>Estudiante</td>
-                    <td>Fecha Pago</td>
-                    <td>Monto</td>
-                    <td>Comprobante</td>
+                    <td>Docente Guía</td>
+                    <td>Título</td>
+                    <td>Descripción</td>
+                    <td>Fecha Inicio</td>
                     <td>Estado</td>
                 </tr>
             </thead>
             <tbody>
-                {% for pago in pagos %}
+                {% for proyecto in proyectos %}
                     <tr>
-                        <td>{{ pago.1 }}</td>
-                        <td>{{ pago.2 }}</td>
-                        <td>{{ pago.3 }}</td>
-                        <td>{{ pago.4 }}</td>
+                        <td>{{ proyecto.1 }}</td>
+                        <td>{{ proyecto.2 }}</td>
+                        <td>{{ proyecto.3 }}</td>
+                        <td>{{ proyecto.4 }}</td>
+                        <td>{{ proyecto.5 }}</td>
+                        <td>{{ proyecto.6 }}</td>
                         <td>
-                            <a href="/pagos/edit_pago/{{pago.0}}" class="btn btn-secondary btn-sm">Editar</a>
-                            <a href="/pagos/delete_pagos/{{pago.0}}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
+                            <a href="/proyectos/edit_proyecto/{{proyecto.0}}" class="btn btn-secondary btn-sm">Editar</a>
+                            <a href="/proyectos/delete_proyecto/{{proyecto.0}}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

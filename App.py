@@ -24,7 +24,7 @@ def docentes():
     cur.execute('SELECT * FROM docentes')
     data = cur.fetchall()
     print(data)
-    return render_template('docentes.html', estudiantes = data)
+    return render_template('docentes.html', docentes = data)
 
 @app.route('/pagos')
 def pagos():
@@ -32,9 +32,34 @@ def pagos():
     cur.execute('SELECT * FROM pagos')
     data = cur.fetchall()
     print(data)
-    return render_template('pagos.html', estudiantes = data)
+    return render_template('pagos.html', pagos = data)
 
-#Guardar
+@app.route('/proyectos')
+def proyectos():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM proyectos')
+    data = cur.fetchall()
+    print(data)
+    return render_template('proyectos.html', proyectos = data)
+
+@app.route('/predefensas')
+def predefensa():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM predefensas')
+    data = cur.fetchall()
+    print(data)
+    return render_template('predefensas.html', predefensas = data)
+
+@app.route('/verificaciones')
+def verificacion():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM VerificacionesSecretaria')
+    data = cur.fetchall()
+    print(data)
+    return render_template('verificaciones.html', verificaciones = data)
+
+
+#Guardar////////////////
 @app.route('/add_estudiante', methods=['POST'])
 def add_estudiante():
     if request.method == 'POST':
@@ -51,8 +76,87 @@ def add_estudiante():
         mysql.connection.commit()
         flash('Estudiante agregado correctamente')
         return redirect(url_for('index'))
+    
+@app.route('/add_docente', methods=['POST'])
+def add_docente():
+    if request.method == 'POST':
+        name = request.form['nombre']
+        apellido = request.form['apellido']
+        email = request.form['email']
+        telefono = request.form['telefono']
+        habilidades = request.form['habilidades']
+        habilitadoGuia = request.form['habilitado_guia']
+        esJurado = request.form['es_jurado']
+        print(name, apellido, email, telefono, habilidades, habilitadoGuia, esJurado)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO docentes (nombre, apellido, email, telefono, Habilidades, HabilitadoGuia, EsJurado) VALUES (%s, %s, %s, %s, %s, %s, %s)", (name, apellido, email, telefono, habilidades, habilitadoGuia, esJurado))
+        mysql.connection.commit()
+        flash('Docente agregado correctamente')
+        return redirect(url_for('docentes'))
+    
+@app.route('/add_pago', methods=['POST'])
+def add_pago():
+    if request.method == 'POST':
+        IdEstudiante = request.form['idestudiante']
+        fecha_pago = request.form['fecha_pago']
+        monto = request.form['monto']
+        comprobante = request.form['comprobante']
+        estado = request.form['estado']
+        print(IdEstudiante, fecha_pago, monto, comprobante, estado)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO pagos (IdEstudiante, FechaPago, Monto, Comprobante, Estado) VALUES (%s, %s, %s, %s, %s)", (IdEstudiante, fecha_pago, monto, comprobante, estado))
+        mysql.connection.commit()
+        flash('Pago agregado correctamente')
+        return redirect(url_for('pagos'))
 
-#editar
+@app.route('/add_proyecto', methods=['POST'])
+def add_proyecto():
+    if request.method == 'POST':
+        id_estudiante = request.form['idestudiante']
+        id_docenteguia = request.form['iddocenteguia']
+        titulo = request.form['titulo']
+        descripcion = request.form['descripcion']
+        fecha_inicio = request.form['fechainicio']
+        estado = request.form['estado']
+        print(id_estudiante, id_docenteguia, titulo, descripcion, fecha_inicio, estado)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO proyectos (IdEstudiante, IdDocenteGuia, Titulo, Descripcion, FechaInicio, Estado) VALUES (%s, %s, %s, %s, %s, %s)", (id_estudiante, id_docenteguia, titulo, descripcion, fecha_inicio, estado))
+        mysql.connection.commit()
+        flash('Proyecto agregado correctamente')
+        return redirect(url_for('proyectos'))
+
+@app.route('/add_predefensa', methods=['POST'])
+def add_predefensa():
+    if request.method == 'POST':
+        id_proyecto = request.form['idproyecto']
+        fecha_programada = request.form['fechaprogramada']
+        reunion = request.form['enlacereunion']
+        estado = request.form['estado']
+        observaciones = request.form['observaciones']
+        print(id_proyecto, fecha_programada, reunion, estado, observaciones)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO PreDefensas (IdProyecto, FechaProgramada, EnlaceReunion, Estado, Observaciones) VALUES (%s, %s, %s, %s, %s)", (id_proyecto, fecha_programada, reunion, estado, observaciones))
+        mysql.connection.commit()
+        flash('Predefensa agregado correctamente')
+        return redirect(url_for('predefensas'))
+
+@app.route('/add_verificacion', methods=['POST'])
+def add_verificacion():
+    if request.method == 'POST':
+        id_carta = request.form['idcarta']
+        fecha_verificacion = request.form['fechaverificacion']
+        docente_habilitado = request.form['docentehabilitado']
+        docente_jurado = request.form['docenteesjurado']
+        observaciones = request.form['observaciones']
+        print(id_carta, fecha_verificacion, docente_habilitado, docente_jurado, observaciones)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO VerificacionesSecretaria (IdCarta, FechaVerificacion, DocenteHabilitado, DocenteEsJurado, Observaciones) VALUES (%s, %s, %s, %s, %s)", (id_carta, fecha_verificacion, docente_habilitado, docente_jurado, observaciones))
+        mysql.connection.commit()
+        flash('Verificacion agregado correctamente')
+        return redirect(url_for('verificaciones'))
+
+
+#editar//////////////
 @app.route('/edit/<id>')
 def get_estudiante(id):
     cur = mysql.connection.cursor()
@@ -60,7 +164,43 @@ def get_estudiante(id):
     data = cur.fetchall()
     return render_template('edit_Estudiante.html', estudiante = data[0])
 
-#actualisar
+@app.route('/docentes/edit_docente/<id>')
+def get_docente(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM docentes WHERE idDocente = %s', (id))
+    data = cur.fetchall()
+    return render_template('edit_docente.html', docente = data[0])
+
+@app.route('/pagos/edit_pago/<id>')
+def get_pago(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM pagos WHERE IdPago = %s', (id))
+    data = cur.fetchall()
+    return render_template('edit_pago.html', pago = data[0])
+
+@app.route('/proyectos/edit_proyecto/<id>')
+def get_proyecto(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM proyectos WHERE IdProyecto = %s', (id))
+    data = cur.fetchall()
+    return render_template('edit_proyecto.html', proyecto = data[0])
+
+@app.route('/predefensas/edit_predefensa/<id>')
+def get_predefensa(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM PreDefensas WHERE IdPreDefensa = %s', (id,))
+    data = cur.fetchall()
+    return render_template('edit_predefensa.html', predefensa = data[0])
+
+@app.route('/verificaciones/edit_verificacion/<id>')
+def get_verificacion(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM VerificacionesSecretaria WHERE IdVerificacion = %s', (id,))
+    data = cur.fetchall()
+    return render_template('edit_verificacion.html', predefensa = data[0])
+
+
+#actualisar/////////////////////////////
 @app.route('/update/<id>', methods=['POST'])
 def update_estudiante(id):
     if request.method == 'POST':
@@ -77,8 +217,86 @@ def update_estudiante(id):
     mysql.connection.commit()
     flash('Estudiante actualizado correctamente')
     return redirect(url_for('index'))
-    
-#Eliminar
+
+@app.route('/docentes/update_docente/<id>', methods=['POST'])
+def update_docente(id):
+    if request.method == 'POST':
+        name = request.form['nombre']
+        apellido = request.form['apellido']
+        email = request.form['email']
+        telefono = request.form['telefono']
+        habilidades = request.form['habilidades']
+        habilitado_guia = request.form['habilitado_guia']
+        es_jurado = request.form['es_jurado']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE docentes SET nombre = %s, apellido = %s, email = %s, telefono = %s, Habilidades = %s, HabilitadoGuia = %s, EsJurado = %s WHERE idDocente = %s""",
+                (name, apellido, email, telefono, habilidades, habilitado_guia, es_jurado, id))
+    mysql.connection.commit()
+    flash('Docente actualizado correctamente')
+    return redirect(url_for('docentes'))
+
+@app.route('/pagos/update_pago/<id>', methods=['POST'])
+def update_pago(id):
+    if request.method == 'POST':
+        IdEstudiante = request.form['idestudiante']
+        fecha_pago = request.form['fechapago']
+        monto = request.form['monto']
+        comprobante = request.form['comprobante']
+        estado = request.form['estado']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE pagos SET IdEstudiante = %s, FechaPago = %s, Monto = %s, Comprobante = %s, Estado = %s WHERE IdPago = %s""",
+                (IdEstudiante, fecha_pago, monto, comprobante, estado, id))
+    mysql.connection.commit()
+    flash('Pago actualizado correctamente')
+    return redirect(url_for('pagos'))
+
+@app.route('/proyectos/update_proyecto/<id>', methods=['POST'])
+def update_proyecto(id):
+    if request.method == 'POST':
+        idestudiante = request.form['idestudiante']
+        id_docenteguia = request.form['iddocenteguia']
+        titulo = request.form['titulo']
+        descripcion = request.form['descripcion']
+        fecha_inicio = request.form['fechainicio']
+        estado = request.form['estado']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE proyectos SET IdEstudiante = %s, IdDocenteGuia = %s, Titulo = %s, Descripcion = %s, FechaInicio = %s, Estado = %s WHERE IdProyecto = %s""",
+                (idestudiante, id_docenteguia, titulo, descripcion, fecha_inicio, estado, id))
+    mysql.connection.commit()
+    flash('Proyecto actualizado correctamente')
+    return redirect(url_for('proyectos'))
+
+@app.route('/predefensas/update_predefensa/<id>', methods=['POST'])
+def update_predefensa(id):
+    if request.method == 'POST':
+        id_proyecto = request.form['idproyecto']
+        fecha_programada = request.form['fechaprogramada']
+        reunion = request.form['enlacereunion']
+        estado = request.form['estado']
+        observaciones = request.form['observaciones']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE predefensas SET IdProyecto = %s, FechaProgramada = %s, EnlaceReunion = %s, Estado = %s, Observaciones = %s WHERE IdPredefensa = %s""",
+                (id_proyecto, fecha_programada, reunion, estado, observaciones, id))
+    mysql.connection.commit()
+    flash('Predefensa actualizada correctamente')
+    return redirect(url_for('predefensa'))
+
+@app.route('/verificaciones/update_verificacion/<id>', methods=['POST'])
+def update_verificacion(id):
+    if request.method == 'POST':
+        id_carta = request.form['idcarta']
+        fecha_verificacion = request.form['fechaverificacion']
+        docente_habilitado = request.form['docentehabilitado']
+        docente_jurado = request.form['docenteesjurado']
+        observaciones = request.form['observaciones']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE predefensas SET IdCarta = %s, FechaVerificacion = %s, DocenteHabilitado = %s, DocenteEsJurado = %s, Observaciones = %s WHERE IdVerificacion = %s""",
+                (id_carta, fecha_verificacion, docente_habilitado, docente_jurado, observaciones, id))
+    mysql.connection.commit()
+    flash('Predefensa actualizada correctamente')
+    return redirect(url_for('predefensa'))
+
+#Eliminar//////////////////////////
 @app.route('/delete/<string:id>')
 def delet_estudiante(id):
     cur = mysql.connection.cursor()
@@ -86,6 +304,38 @@ def delet_estudiante(id):
     mysql.connection.commit()
     flash('Estudiante eliminado correctamente')
     return redirect(url_for('index'))
+@app.route('/docentes/delete_docente/<string:id>')
+def delet_docente(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM docentes WHERE IdDocente = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Docente eliminado correctamente')
+    return redirect(url_for('docentes'))
+
+@app.route('/pagos/delete_pagos/<string:id>')
+def delet_pagos(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM pagos WHERE IdPago = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Pago eliminado correctamente')
+    return redirect(url_for('pagos'))
+
+@app.route('/proyectos/delete_proyecto/<string:id>')
+def delet_proyecto(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM proyectos WHERE IdProyecto = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Proyecto eliminado correctamente')
+    return redirect(url_for('proyectos'))
+
+@app.route('/predefensas/delete_predefensa/<string:id>')
+def delet_predefensa(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM predefensas WHERE IdPredefensa = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Predefensa eliminada correctamente')
+    return redirect(url_for('predefensa'))
+
 
 if __name__ == '__main__':
         # Run the Flask app on port 3000

@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<form action="/pagos/update_pago/{{pago.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <div style="margin-bottom: 15px;">
+        <label for="idestudiante" style="display: block; font-weight: bold;">Id Estudiante</label>
+        <input type="text" id="idestudiante" name="idestudiante" value="{{pago[1]}}" placeholder="Id Estudiante" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="fechapago" style="display: block; font-weight: bold;">Fecha de pago</label>
+        <input type="text" id="fechapago" name="fechapago" value="{{pago[2]}}" placeholder="Fecha pago" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="monto" style="display: block; font-weight: bold;">Comprobante</label>
+        <input type="text" id="monto" name="monto" value="{{pago[3]}}" placeholder="Monto" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="Comprobante" style="display: block; font-weight: bold;">Comprobante</label>
+        <input type="text" id="comprobante" name="comprobante" value="{{pago[4]}}" placeholder="Correo Electrónico" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="estado" style="display: block; font-weight: bold;">estado</label>
+        <input type="text" id="estado" name="estado" value="{{pago[5]}}" placeholder="estado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        Actualizar
+    </button>
+</form>
+{% endblock %}

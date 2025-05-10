@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<form action="/proyectos/update_proyecto/{{proyecto.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <div style="margin-bottom: 15px;">
+        <label for="idestudiante" style="display: block; font-weight: bold;">Id Estudiante</label>
+        <input type="text" id="idestudiante" name="idestudiante" value="{{proyecto[1]}}" placeholder="Id Estudiante" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="iddocenteguia" style="display: block; font-weight: bold;">Docente Guia</label>
+        <input type="text" id="iddocenteguia" name="iddocenteguia" value="{{proyecto[2]}}" placeholder="Docente Guia" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="titulo" style="display: block; font-weight: bold;">Titulo</label>
+        <input type="text" id="titulo" name="titulo" value="{{proyecto[3]}}" placeholder="titulo" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="descripcion" style="display: block; font-weight: bold;">Descripcion</label>
+        <input type="text" id="descripcion" name="descripcion" value="{{proyecto[4]}}" placeholder="Descripcion" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="fechainicio" style="display: block; font-weight: bold;">Fecha Inicio</label>
+        <input type="date" id="fechainicio" name="fechainicio" value="{{proyecto[5]}}" placeholder="fechainicio" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="estado" style="display: block; font-weight: bold;">Estado</label>
+        <input type="text" id="estado" name="estado" value="{{proyecto[6]}}" placeholder="estado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        Actualizar
+    </button>
+</form>
+{% endblock %}

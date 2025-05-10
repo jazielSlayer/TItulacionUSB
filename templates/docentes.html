@@ -13,27 +13,27 @@
             </div>
         {% endfor %}
         <div class="card card-body">
-            <form action="/add_estudiante" method="POST">
+            <form action="/add_docente" method="POST">
                 <div class="form-group">
-                    <input type="text" name="nombre" placeholder="Ingresa tu nombre" required class="form-control">
+                    <input type="text" name="nombre" placeholder="Ingresa el nombre del docente" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type ="text" name="apellido" placeholder="Ingresa tu apellido" required class="form-control">
+                    <input type="text" name="apellido" placeholder="Ingresa el apellido del docente" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="codigo_estudiante" placeholder="Ingresa tu codigo de estudiante" required class="form-control">
+                    <input type="email" name="email" placeholder="Ingresa el email del docente" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="Ingresa tu email" required class="form-control">
+                    <input type="text" name="telefono" placeholder="Ingresa el número de teléfono del docente" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="telefono" placeholder="Ingresa tu numero de telefono" required class="form-control">
+                    <input type="text" name="habilidades" placeholder="Ingresa las habilidades del docente" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="number" name="estado_pagos" placeholder="Estado de pagos (1: Al día, 0: Pendiente)" required class="form-control">
+                    <input type="number" name="habilitado_guia" placeholder="Habilitado como guía (1: Sí, 0: No)" required class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="number" name="habilitado_titulacion" placeholder="Habilitado para titulación (1: Habilitado, 0: No habilitado)" required class="form-control">
+                    <input type="number" name="es_jurado" placeholder="Es jurado (1: Sí, 0: No)" required class="form-control">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">
@@ -49,26 +49,26 @@
                 <tr>
                     <td>Nombre</td>
                     <td>Apellido</td>
-                    <td>Código Estudiante</td>
                     <td>Email</td>
-                    <td>Teléfono</td>
-                    <td>Estado de Pagos</td>
-                    <td>Habilitado para Titulación</td>
+                    <td>Telefono</td>
+                    <td>Habilidades</td>
+                    <td>Habilitado Guia</td>
+                    <td>Es Jurado</td>
                 </tr>
             </thead>
             <tbody>
-                {% for estudiante in estudiantes %}
+                {% for docente in docentes %}
                     <tr>
-                        <td>{{ estudiante.1 }}</td>
-                        <td>{{ estudiante.2 }}</td>
-                        <td>{{ estudiante.3 }}</td>
-                        <td>{{ estudiante.4 }}</td>
-                        <td>{{ estudiante.5 }}</td>
-                        <td>{{ estudiante.6 }}</td>
-                        <td>{{ estudiante.7 }}</td>
+                        <td>{{ docente.1 }}</td>
+                        <td>{{ docente.2 }}</td>
+                        <td>{{ docente.3 }}</td>
+                        <td>{{ docente.4 }}</td>
+                        <td>{{ docente.5 }}</td>
+                        <td>{{ docente.6 }}</td>
+                        <td>{{ docente.7 }}</td>
                         <td>
-                            <a href="/edit/{{estudiante.0}}" class="btn btn-secondary btn-sm">Editar</a>
-                            <a href="/delete/{{estudiante.0}}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
+                            <a href="/docentes/edit_docente/{{docente.0}}" class="btn btn-secondary btn-sm">Editar</a>
+                            <a href="/docentes/delete_docente/{{docente.0}}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}
