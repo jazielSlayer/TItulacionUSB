@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<form action="/cartassolicitud/update_cartassolicitud/{{cartassolicitud.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <div style="margin-bottom: 15px;">
+        <label for="idestudiante" style="display: block; font-weight: bold;">Estudiante</label>
+        <input type="text" id="idestudiante" name="idestudiante" value="{{cartassolicitud[1]}}" placeholder="Estudiante" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="iddocente" style="display: block; font-weight: bold;">Docente</label>
+        <input type="text" id="iddocente" name="iddocente" value="{{cartassolicitud[2]}}" placeholder="Docente" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="fechapresentacion" style="display: block; font-weight: bold;">Fecha Presentacion</label>
+        <input type="date" id="fechapresentacion" name="fechapresentacion" value="{{cartassolicitud[3]}}" placeholder="Fecha presentacion" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="estado" style="display: block; font-weight: bold;">Estado</label>
+        <input type="text" id="estado" name="estado" value="{{cartassolicitud[4]}}" placeholder="Estado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="contenido" style="display: block; font-weight: bold;">contenido</label>
+        <input type="text" id="contenido" name="contenido" value="{{cartassolicitud[5]}}" placeholder="contenido" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="firmadigitalestudiante" style="display: block; font-weight: bold;">Firma estudiante</label>
+        <input type="text" id="firmadigitalestudiante" name="firmadigitalestudiante" value="{{cartassolicitud[6]}}" placeholder="Firma estudiante" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="firmadigitaldocente" style="display: block; font-weight: bold;">Firma Docente</label>
+        <input type="text" id="firmadigitaldocente" name="firmadigitaldocente" value="{{cartassolicitud[7]}}" placeholder="Firma docente" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+    </div>
+    <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        Actualizar
+    </button>
+</form>
+{% endblock %}

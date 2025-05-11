@@ -24,7 +24,7 @@
                 <input type="text" name="docentehabilitado" placeholder="Docente Habilitado" class="form-control">
             </div>
             <div class="form-group">
-                <input type="text" name="docenteesjurado" placeholder="Docente es jurado" required class="form-control">
+                <input type="text" name="docentesjurado" placeholder="Docente es jurado" required class="form-control">
             </div>
             <div class="form-group">
                 <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
@@ -41,26 +41,25 @@
         <table class="table table-striped table-bordered bg-white table-sm">
             <thead>
                 <tr>
-                    <td>Proyecto</td>
-                    <td>Fecha Programada</td>
-                    <td>Reunion</td>
-                    <td>Estado</td>
-                    <td>Fecha Inicio</td>
-                    <td>Obsercvaciones</td>
+                    <td>Carta</td>
+                    <td>Fecha verificacion</td>
+                    <td>Docente Habilitado</td>
+                    <td>Docente Jurado</td>
+                    <td>Observaciones</td>
                 </tr>
             </thead>
             <tbody>
-                {% for predefensa in predefensas %}
+                {% for verificacion in verificaciones %}
                     <tr>
-                        <td>{{ predefensa.1 }}</td>
-                        <td>{{ predefensa.2 }}</td>
-                        <td>{{ predefensa.3 }}</td>
-                        <td>{{ predefensa.4 }}</td>
-                        <td>{{ predefensa.5 }}</td>
-                        <td>{{ predefensa.6 }}</td>
+                        <td>{{ verificacion.1 }}</td>
+                        <td>{{ verificacion.2 }}</td>
+                        <td>{{ verificacion.3 }}</td>
+                        <td>{{ verificacion.4 }}</td>
+                        <td>{{ verificacion.5 }}</td>
+                    
                         <td>
-                            <a href="/predefensas/edit_predefensa/{{predefensa.0}}" class="btn btn-secondary btn-sm">Editar</a>
-                            <a href="/predefensas/delete_predefensa/{{predefensa.0}}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
+                            <a href="/verificaciones/edit_verificacion/{{verificacion.0}}" class="btn btn-secondary btn-sm">Editar</a>
+                            <a href="/verificaciones/delete_verificacion/{{verificacion.0}}" class="btn btn-danger btn-sm btn-delete">Eliminar</a>
                         </td>
                     </tr>
                 {% endfor %}

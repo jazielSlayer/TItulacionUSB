@@ -58,6 +58,13 @@ def verificacion():
     print(data)
     return render_template('verificaciones.html', verificaciones = data)
 
+@app.route('/cartassolicitudes')
+def solicitud():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM CartasSolicitud')
+    data = cur.fetchall()
+    print(data)
+    return render_template('cartassolicitud.html', cartassolicitudes = data)
 
 #Guardar////////////////
 @app.route('/add_estudiante', methods=['POST'])
@@ -146,14 +153,31 @@ def add_verificacion():
         id_carta = request.form['idcarta']
         fecha_verificacion = request.form['fechaverificacion']
         docente_habilitado = request.form['docentehabilitado']
-        docente_jurado = request.form['docenteesjurado']
+        docente_jurado = request.form['docentesjurado']
         observaciones = request.form['observaciones']
         print(id_carta, fecha_verificacion, docente_habilitado, docente_jurado, observaciones)
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO VerificacionesSecretaria (IdCarta, FechaVerificacion, DocenteHabilitado, DocenteEsJurado, Observaciones) VALUES (%s, %s, %s, %s, %s)", (id_carta, fecha_verificacion, docente_habilitado, docente_jurado, observaciones))
         mysql.connection.commit()
         flash('Verificacion agregado correctamente')
-        return redirect(url_for('verificaciones'))
+        return redirect(url_for('verificacion'))
+
+@app.route('/add_cartassolicitud', methods=['POST'])
+def add_solicitud():
+    if request.method == 'POST':
+        id_estudiante = request.form['idestudiante']
+        id_docente = request.form['iddocente']
+        fecha_presentacion = request.form['fechapresentacion']
+        estado = request.form['estado']
+        contenido = request.form['contenido']
+        firma_digital_estudiante = request.form['firmadigitalestudiante']
+        firma_digital_docente = request.form['firmadigitaldocente']
+        print(id_estudiante, id_docente, fecha_presentacion, estado, contenido, firma_digital_estudiante, firma_digital_docente)
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO CartasSolicitud (IdEstudiante, IdDocente, FechaPresentacion, Estado, Contenido, FirmaDigitalEstudiante, FirmaDigitalDocente) VALUES (%s, %s, %s, %s, %s, %s, %s)", (id_estudiante, id_docente, fecha_presentacion, estado, contenido, firma_digital_estudiante, firma_digital_docente))
+        mysql.connection.commit()
+        flash('Verificacion agregado correctamente')
+        return redirect(url_for('solicitud'))
 
 
 #editar//////////////
@@ -192,13 +216,19 @@ def get_predefensa(id):
     data = cur.fetchall()
     return render_template('edit_predefensa.html', predefensa = data[0])
 
+@app.route('/cartassolicitud/edit_cartassolicitud/<id>')
+def get_solicitud(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM CartasSolicitud WHERE IdCarta = %s', (id,))
+    data = cur.fetchall()
+    return render_template('edit_cartassolicitud.html', cartassolicitud = data[0])
+
 @app.route('/verificaciones/edit_verificacion/<id>')
 def get_verificacion(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM VerificacionesSecretaria WHERE IdVerificacion = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_verificacion.html', predefensa = data[0])
-
+    return render_template('edit_verificacion.html', verificacion = data[0])
 
 #actualisar/////////////////////////////
 @app.route('/update/<id>', methods=['POST'])
@@ -290,11 +320,28 @@ def update_verificacion(id):
         docente_jurado = request.form['docenteesjurado']
         observaciones = request.form['observaciones']
     cur = mysql.connection.cursor()
-    cur.execute("""UPDATE predefensas SET IdCarta = %s, FechaVerificacion = %s, DocenteHabilitado = %s, DocenteEsJurado = %s, Observaciones = %s WHERE IdVerificacion = %s""",
+    cur.execute("""UPDATE VerificacionesSecretaria SET IdCarta = %s, FechaVerificacion = %s, DocenteHabilitado = %s, DocenteEsJurado = %s, Observaciones = %s WHERE IdVerificacion = %s""",
                 (id_carta, fecha_verificacion, docente_habilitado, docente_jurado, observaciones, id))
     mysql.connection.commit()
-    flash('Predefensa actualizada correctamente')
-    return redirect(url_for('predefensa'))
+    flash('Verificacion actualizada correctamente')
+    return redirect(url_for('verificacion'))
+
+@app.route('/cartassolicitud/update_cartassolicitud/<id>', methods=['POST'])
+def update_solicitud(id):
+    if request.method == 'POST':
+        id_estudiante = request.form['idestudiante']
+        id_docente = request.form['iddocente']
+        fecha_presentacion = request.form['fechapresentacion']	
+        estado = request.form['estado']
+        contenido = request.form['contenido']
+        firma_estudiante = request.form['firmadigitalestudiante']
+        firma_docente = request.form['firmadigitaldocente']
+    cur = mysql.connection.cursor()
+    cur.execute("""UPDATE CartasSolicitud SET IdEstudiante = %s, IdDocente = %s, FechaPresentacion = %s, Estado = %s, Contenido = %s, FirmaDigitalEstudiante = %s, FirmaDigitalDocente  = %s WHERE IdCarta = %s""",
+                (id_estudiante, id_docente, fecha_presentacion, estado, contenido,firma_estudiante, firma_docente, id))
+    mysql.connection.commit()
+    flash('Solicitud actualizada correctamente')
+    return redirect(url_for('solicitud'))
 
 #Eliminar//////////////////////////
 @app.route('/delete/<string:id>')
@@ -335,6 +382,22 @@ def delet_predefensa(id):
     mysql.connection.commit()
     flash('Predefensa eliminada correctamente')
     return redirect(url_for('predefensa'))
+
+@app.route('/verificaciones/delete_verificacion/<string:id>')
+def delet_verificacion(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM VerificacionesSecretaria WHERE IdVerificacion = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Verificacion eliminada correctamente')
+    return redirect(url_for('verificacion'))
+
+@app.route('/cartassolicitud/delete_cartassolicitud/<string:id>')
+def delet_dolicitud(id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM CartasSolicitud WHERE IdCarta = {0}'.format(id))
+    mysql.connection.commit()
+    flash('Solicitud eliminada correctamente')
+    return redirect(url_for('solicitud'))
 
 
 if __name__ == '__main__':

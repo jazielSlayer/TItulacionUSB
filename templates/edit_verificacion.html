@@ -1,26 +1,26 @@
 {% extends 'layout.html' %}
 {% block body %}
 
-<form action="/predefensas/update_predefensa/{{predefensa.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+<form action="/verificaciones/update_verificacion/{{verificacion.0}}" method="POST" style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
     <div style="margin-bottom: 15px;">
-        <label for="idproyecto" style="display: block; font-weight: bold;">Proyecto</label>
-        <input type="text" id="idproyecto" name="idproyecto" value="{{predefensa[1]}}" placeholder="Id Proyecto" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <label for="idcarta" style="display: block; font-weight: bold;">Carta</label>
+        <input type="text" id="idcarta" name="idcarta" value="{{verificacion[1]}}" placeholder="Carta" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
     </div>
     <div style="margin-bottom: 15px;">
-        <label for="fechaprogramada" style="display: block; font-weight: bold;">Fecha Programada</label>
-        <input type="date" id="fechaprogramada" name="fechaprogramada" value="{{predefensa[2]}}" placeholder="Fecha" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <label for="fechaverificacion" style="display: block; font-weight: bold;">Fecha verificacion</label>
+        <input type="date" id="fechaverificacion" name="fechaverificacion" value="{{verificacion[2]}}" placeholder="Fecha" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
     </div>
     <div style="margin-bottom: 15px;">
-        <label for="enlacereunion" style="display: block; font-weight: bold;">Reunion</label>
-        <input type="text" id="enlacereunion" name="enlacereunion" value="{{predefensa[3]}}" placeholder="Enlace Reunion" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <label for="docentehabilitado" style="display: block; font-weight: bold;">Docente Habilitado</label>
+        <input type="text" id="docentehabilitado" name="docentehabilitado" value="{{verificacion[3]}}" placeholder="Docente habilitado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
     </div>
     <div style="margin-bottom: 15px;">
-        <label for="estado" style="display: block; font-weight: bold;">Estado</label>
-        <input type="text" id="estado" name="estado" value="{{predefensa[4]}}" placeholder="Estado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <label for="docenteesjurado" style="display: block; font-weight: bold;">Docente jurado</label>
+        <input type="text" id="docenteesjurado" name="docenteesjurado" value="{{verificacion[4]}}" placeholder="Docente jurado" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
     </div>
     <div style="margin-bottom: 15px;">
         <label for="observaciones" style="display: block; font-weight: bold;">Observaciones</label>
-        <input type="text" id="observaciones" name="observaciones" value="{{predefensa[5]}}" placeholder="Observaciones" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <input type="text" id="observaciones" name="observaciones" value="{{verificacion[5]}}" placeholder="Observaciones" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
     </div>
     <button type="submit" style="display: block; width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
         Actualizar
