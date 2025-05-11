@@ -14,6 +14,31 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     {% if session.role %}
+                        {% if session.role in ['admin'] %}
+                        <a class="navbar-brand" href="/">Inicio</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/docentes">Docentes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/proyectos">Proyectos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/predefensas">Pre defensa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/cartassolicitudes">Solicitudes</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/pagos">Pagos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/verificaciones">Verificación</a>
+                            </li>
+                        {% endif %}
                         {% if session.role == 'student' %}
                             <a class="navbar-brand" href="/estudiante_vista">Inicio</a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,10 +54,10 @@
                                 <a class="nav-link" href="#">Sistema de titulacion </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Asignacion de titulacion </a>
+                                <a class="nav-link" href="/asignacionDocente">Asignacion de titulacion </a>
                             </li>
                         {% endif %}
-                        {% if session.role in ['teacher', 'admin'] %}
+                        {% if session.role in ['teacher'] %}
                             <a class="navbar-brand" href="/docentes_vista">Inicio</a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
@@ -48,14 +73,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Solicitudes</a>
-                            </li>
-                        {% endif %}
-                        {% if session.role == 'admin' %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/pagos">Pagos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/verificaciones">Verificación</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">

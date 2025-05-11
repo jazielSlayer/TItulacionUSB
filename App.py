@@ -66,7 +66,7 @@ def login():
             flash('Credenciales incorrectas.', 'danger')
             return redirect(url_for('login'))
     
-    return render_template('login.html')
+    return render_template('/screens/login.html')
 
 # Ruta para registro
 @app.route('/register', methods=['GET', 'POST'])
@@ -128,7 +128,7 @@ def register():
         flash('Registro exitoso. Por favor, inicia sesión.', 'success')
         return redirect(url_for('login'))
     
-    return render_template('register.html')
+    return render_template('/screens/register.html')
 
 # Ruta para logout
 @app.route('/logout')
@@ -140,17 +140,26 @@ def logout():
 
 # Páginas (protegidas con login)
 
+@app.route('/asignacionDocente')
+@login_required
+@role_required('student')
+def asignacion():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM Docentes')
+    data = cur.fetchall()
+    return render_template('/screens/asignacionDocente.html', asignaciones=data)
+
 @app.route('/docentes_vista')
 @login_required
 @role_required('admin', 'teacher')
 def docentes_vista():
-    return render_template('vista_docentes.html')
+    return render_template('/vistas/vista_docentes.html')
 
 @app.route('/estudiante_vista')
 @login_required
 @role_required('admin', 'student')
 def estudiante_vista():
-    return render_template('vista_estudiantes.html')
+    return render_template('/vistas/vista_estudiantes.html')
 
 @app.route('/')
 @login_required
@@ -158,7 +167,7 @@ def index():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Estudiantes')
     data = cur.fetchall()
-    return render_template('index.html', estudiantes=data)
+    return render_template('/screens/index.html', estudiantes=data)
 
 @app.route('/docentes')
 @login_required
@@ -166,7 +175,7 @@ def docentes():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Docentes')
     data = cur.fetchall()
-    return render_template('docentes.html', docentes=data)
+    return render_template('/screens/docentes.html', docentes=data)
 
 @app.route('/pagos')
 @login_required
@@ -175,7 +184,7 @@ def pagos():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Pagos')
     data = cur.fetchall()
-    return render_template('pagos.html', pagos=data)
+    return render_template('/screens/pagos.html', pagos=data)
 
 @app.route('/proyectos')
 @login_required
@@ -184,7 +193,7 @@ def proyectos():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Proyectos')
     data = cur.fetchall()
-    return render_template('proyectos.html', proyectos=data)
+    return render_template('/screens/proyectos.html', proyectos=data)
 
 @app.route('/predefensas')
 @login_required
@@ -193,7 +202,7 @@ def predefensa():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM PreDefensas')
     data = cur.fetchall()
-    return render_template('predefensas.html', predefensas=data)
+    return render_template('/screens/predefensas.html', predefensas=data)
 
 @app.route('/verificaciones')
 @login_required
@@ -202,7 +211,7 @@ def verificacion():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM VerificacionesSecretaria')
     data = cur.fetchall()
-    return render_template('verificaciones.html', verificaciones=data)
+    return render_template('/screens/verificaciones.html', verificaciones=data)
 
 @app.route('/cartassolicitudes')
 @login_required
@@ -211,7 +220,7 @@ def solicitud():
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM CartasSolicitud')
     data = cur.fetchall()
-    return render_template('cartassolicitud.html', cartassolicitudes=data)
+    return render_template('/screens/cartassolicitud.html', cartassolicitudes=data)
 
 # Guardar
 @app.route('/add_estudiante', methods=['POST'])
@@ -348,7 +357,7 @@ def get_estudiante(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Estudiantes WHERE IdEstudiante = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_Estudiante.html', estudiante=data[0])
+    return render_template('/edit/edit_Estudiante.html', estudiante=data[0])
 
 @app.route('/docentes/edit_docente/<id>')
 @login_required
@@ -357,7 +366,7 @@ def get_docente(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Docentes WHERE IdDocente = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_docente.html', docente=data[0])
+    return render_template('/edit/edit_docente.html', docente=data[0])
 
 @app.route('/pagos/edit_pago/<id>')
 @login_required
@@ -366,7 +375,7 @@ def get_pago(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Pagos WHERE IdPago = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_pago.html', pago=data[0])
+    return render_template('/edit/edit_pago.html', pago=data[0])
 
 @app.route('/proyectos/edit_proyecto/<id>')
 @login_required
@@ -375,7 +384,7 @@ def get_proyecto(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM Proyectos WHERE IdProyecto = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_proyecto.html', proyecto=data[0])
+    return render_template('/edit/edit_proyecto.html', proyecto=data[0])
 
 @app.route('/predefensas/edit_predefensa/<id>')
 @login_required
@@ -384,7 +393,7 @@ def get_predefensa(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM PreDefensas WHERE IdPreDefensa = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_predefensa.html', predefensa=data[0])
+    return render_template('/edit/edit_predefensa.html', predefensa=data[0])
 
 @app.route('/cartassolicitud/edit_cartassolicitud/<id>')
 @login_required
@@ -393,7 +402,7 @@ def get_solicitud(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM CartasSolicitud WHERE IdCarta = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_cartassolicitud.html', cartassolicitud=data[0])
+    return render_template('/edit/edit_cartassolicitud.html', cartassolicitud=data[0])
 
 @app.route('/verificaciones/edit_verificacion/<id>')
 @login_required
@@ -402,7 +411,7 @@ def get_verificacion(id):
     cur = mysql.connection.cursor()
     cur.execute('SELECT * FROM VerificacionesSecretaria WHERE IdVerificacion = %s', (id,))
     data = cur.fetchall()
-    return render_template('edit_verificacion.html', verificacion=data[0])
+    return render_template('/edit/edit_verificacion.html', verificacion=data[0])
 
 # Actualizar
 @app.route('/update/<id>', methods=['POST'])

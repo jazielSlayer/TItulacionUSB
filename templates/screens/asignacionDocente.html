@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row">
+    {% if session.role == 'teacher' %}
+    <div class="col-md-5">
+        {% for message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ message[0] }} alert-dismissible fade show" role="alert">
+                {{ message[1] }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        
+    </div>
+    {% endif %}
+    <div class="col-md-7">
+        <ul class="list-group">
+            {% for docente in asignaciones %}
+                <li class="list-group-item mb-3" style="background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); border-radius: 10px;">
+                    <strong>
+                        <h4>
+                            {{ docente.1 }}
+                            {{ docente.2 }}
+                        </h4>
+                    </strong>
+                    <ul style="padding-left: 0; text-align: left;">
+                        <li style="list-style-type: none; margin-bottom: 10px;">
+                            <strong>Correo:</strong>
+                            {{ docente.3 }}
+                        </li>
+                        <li style="list-style-type: none; margin-bottom: 10px;">
+                            <strong>Teléfono:</strong>
+                            {{ docente.4 }}
+                        </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
