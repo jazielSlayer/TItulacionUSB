@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="d-flex justify-content-start">
+    <a class="navbar-brand" href="/">
+        <img src="/static/img/logo_salesiana.png" alt="Logo" width="400" height="80" class="d-inline-block align-top">
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div style="color: #8B0000; font-weight: bold; font-size: 1.5rem; text-align: left; margin-top: 20px;">
+    <h1>Formulario de inscripción</h1>
+</div>
+<div style="color: #8B0000; font-weight: bold; font-size: 1.5rem; text-align: left; margin-top: 20px;">
+    <h3>Llene el siguiente formulario</h3>
+</div>
+<hr style="border: 1px solid #D3D3D3; margin-top: 10px;">
+
+<div class="card card-body" style="max-width: 400px; margin-left: 0;">
+    <form action="/new_inscripcion" method="POST">
+        <div class="form-group">
+            <input type="number" name="id_estudiante" placeholder="Ingresa tu ID de estudiante" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="nombres" placeholder="Ingresa tu nombre" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="apellido" placeholder="Ingresa tu apellido" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="email" name="correo_electronico" placeholder="Ingresa tu email" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="telefono" placeholder="Ingresa tu numero de telefono" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="ci" placeholder="Ingresa tu CI" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="ru" placeholder="Ingresa tu RU" required class="form-control">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #8B0000; border-color: #8B0000;">Guardar</button>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}

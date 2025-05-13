@@ -139,6 +139,11 @@ def logout():
     return redirect(url_for('login'))
 
 # Páginas (protegidas con login)
+@app.route('/formulario_de_inscripcion')
+@login_required
+@role_required('student')
+def formulario_inscripcion():
+    return render_template('/screens/formularioScreen.html')
 
 @app.route('/asignacionDocente')
 @login_required
@@ -168,6 +173,18 @@ def index():
     cur.execute('SELECT * FROM Estudiantes')
     data = cur.fetchall()
     return render_template('/screens/index.html', estudiantes=data)
+
+@app.route('/form_estudiante')
+@login_required
+def form_estudiante():
+    cur = mysql.connection.cursor()
+    nombre = request.args.get('nombre')  # Obtener el nombre desde los parámetros GET
+    if nombre:
+        cur.execute('SELECT * FROM Estudiantes WHERE Nombre LIKE %s', ('%' + nombre + '%',))
+    else:
+        cur.execute('SELECT * FROM Estudiantes')
+    data = cur.fetchall()
+    return render_template('/screens/formularioScreen.html', form_estudiante=data)
 
 @app.route('/docentes')
 @login_required
@@ -241,6 +258,25 @@ def add_estudiante():
         mysql.connection.commit()
         flash('Estudiante agregado correctamente', 'success')
         return redirect(url_for('index'))
+    
+@app.route('/new_estudiante', methods=['POST'])
+@login_required
+@role_required('student')
+def new_estudiante():
+    if request.method == 'POST':
+        id_estudiante = request.form['id_estudiante']
+        nombres = request.form['nombres']
+        apellido = request.form['apellido']
+        correo_electronico = request.form['correo_electronico']
+        telefono = request.form['telefono']
+        ci = request.form['ci']
+        ru = request.form['ru']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO inscripciones (IdEstudiante, Nombres, Apellido, CorreoElectronico, Telefono, CI, RU) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (id_estudiante, nombres, apellido, correo_electronico, telefono, ci, ru))
+        mysql.connection.commit()
+        flash('Inscripción registrada correctamente', 'success')
+        return redirect(url_for('/screens/formularioScreen'))
 
 @app.route('/add_docente', methods=['POST'])
 @login_required
@@ -350,6 +386,7 @@ def add_solicitud():
         return redirect(url_for('solicitud'))
 
 # Editar
+
 @app.route('/edit/<id>')
 @login_required
 @role_required('admin')
