@@ -258,16 +258,16 @@ def add_estudiante():
         mysql.connection.commit()
         flash('Estudiante agregado correctamente', 'success')
         return redirect(url_for('index'))
-    
-@app.route('/new_estudiante', methods=['POST'])
+
+@app.route('/new_inscripcion', methods=['POST'])
 @login_required
 @role_required('student')
-def new_estudiante():
+def new_inscripcion():
     if request.method == 'POST':
         id_estudiante = request.form['id_estudiante']
         nombres = request.form['nombres']
         apellido = request.form['apellido']
-        correo_electronico = request.form['correo_electronico']
+        correo_electronico = request.form['email']
         telefono = request.form['telefono']
         ci = request.form['ci']
         ru = request.form['ru']
@@ -276,7 +276,8 @@ def new_estudiante():
                     (id_estudiante, nombres, apellido, correo_electronico, telefono, ci, ru))
         mysql.connection.commit()
         flash('Inscripción registrada correctamente', 'success')
-        return redirect(url_for('/screens/formularioScreen'))
+        return redirect(url_for('estudiante_vista'))
+
 
 @app.route('/add_docente', methods=['POST'])
 @login_required
